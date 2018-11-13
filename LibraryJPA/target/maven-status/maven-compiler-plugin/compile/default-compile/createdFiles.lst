@@ -1,0 +1,13 @@
+model/Brend.class
+model/Korisnik.class
+model/Automobil.class
+model/Uloga.class
+model/Ogla.class
+model/OglasSearchDto.class
+managers/KnjigaManager.class
+model/OglasSearchDto$SearchCriteria.class
+model/Komentar.class
+managers/JPAUtil.class
+managers/ClanManager.class
+model/OglasSearchDto$SearchOption.class
+model/Ponuda.class

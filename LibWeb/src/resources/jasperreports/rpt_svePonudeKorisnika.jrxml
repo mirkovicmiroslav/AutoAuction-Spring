@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_svePonudeKorisnika" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="aa678dc8-004f-45b1-b9f0-b517dd2c91ed">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="korisnickoIme" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="ponudaPare" class="java.lang.Double"/>
+	<field name="datumVreme" class="java.util.Date"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="97" y="9" width="383" height="61" uuid="906e9322-0cc0-40b8-98c4-c619f302be5b"/>
+				<textElement textAlignment="Center">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Sve ponude]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="440" y="21" width="100" height="30" uuid="8cae8e2e-7c71-4cd5-804b-bcc249c34bd9"/>
+				<textFieldExpression><![CDATA[$P{korisnickoIme}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="22" y="0" width="100" height="30" uuid="b15480fd-07c9-4bf2-bae4-bfc1514e3321">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="98246721-0f36-4599-a7e8-425374279a68"/>
+				</reportElement>
+				<text><![CDATA[ponudaPare]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="193" y="0" width="100" height="30" uuid="18194778-38bb-49a7-a32c-c377fb4959fe">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e814ccea-a358-4a6d-b759-efab59a8df8b"/>
+				</reportElement>
+				<text><![CDATA[datumVreme]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="22" y="13" width="100" height="30" uuid="681488b0-e6d0-42b9-a329-0e618b5b9621">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="98246721-0f36-4599-a7e8-425374279a68"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{ponudaPare}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="193" y="15" width="100" height="30" uuid="72be5af7-b5e8-4070-813f-cf12df32ddcf">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e814ccea-a358-4a6d-b759-efab59a8df8b"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{datumVreme}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

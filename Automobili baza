@@ -1,0 +1,154 @@
+-- Skripta za IS2 - projekat2
+CREATE DATABASE IF NOT EXISTS is2;
+USE is2;
+
+/*-------------------------------------------------------------- */;
+/*------------------------DROP TABLES--------------------------- */;
+/*-------------------------------------------------------------- */;
+DROP TABLE IF EXISTS `komentar`;
+DROP TABLE IF EXISTS `ponuda`;
+DROP TABLE IF EXISTS `ogla`;
+DROP TABLE IF EXISTS `automobil`;
+DROP TABLE IF EXISTS `korisnik`;
+DROP TABLE IF EXISTS `uloga`;
+DROP TABLE IF EXISTS `brend`;
+/*-------------------------------------------------------------- */;
+/*------------------------DROP TABLES END----------------------- */;
+/*-------------------------------------------------------------- */;
+
+/*-------------------------------------------------------------- */;
+/*---------------------RECREATE TABLES-------------------------- */;
+/*-------------------------------------------------------------- */;
+-- Uloga
+CREATE TABLE IF NOT EXISTS `uloga` (
+  `id_uloge` int(11) NOT NULL AUTO_INCREMENT,
+  `ime_uloge` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id_uloge`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Brend
+CREATE  TABLE IF NOT EXISTS `brend` (
+  `id_brenda` int(11) NOT NULL AUTO_INCREMENT,
+  `naziv` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id_brenda`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Korisnik
+CREATE TABLE IF NOT EXISTS `korisnik` (
+  `id_korisnika` int(11) NOT NULL AUTO_INCREMENT,
+  `Uloga_id_uloge` int(11) NOT NULL,
+  `ime` varchar(50) DEFAULT NULL,
+  `prezime` varchar(50) DEFAULT NULL,
+  `korisnicko_ime` varchar(100) UNIQUE DEFAULT NULL,
+  `lozinka` varchar(100) DEFAULT NULL,
+  `email` varchar(100) UNIQUE DEFAULT NULL,
+  `slika` mediumblob DEFAULT NULL,
+  `kratak_opis` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_korisnika`),
+  KEY `Korisnik_Uloga_FK` (`Uloga_id_uloge`)  
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Automobil
+CREATE TABLE IF NOT EXISTS `automobil` (
+  `id_automobila` int(11) NOT NULL AUTO_INCREMENT,
+  `Brend_id_brenda` int(11) NOT NULL,
+  `slika_automobila` mediumblob DEFAULT NULL,
+  `model` varchar(20) DEFAULT NULL,
+  `godiste` int(20) DEFAULT 0,
+  `boja` varchar(100) DEFAULT NULL,
+  `kilometraza` int(20) DEFAULT 0,
+  `tip_goriva` varchar(20) DEFAULT NULL,
+  `snaga` int(20) DEFAULT 0,
+  `sedista` int(20) DEFAULT 0,
+  `vrata` int(20) DEFAULT 0,
+  `pogon` varchar(100) DEFAULT NULL,
+  `menjac` varchar(100) DEFAULT NULL,
+   PRIMARY KEY (`id_automobila`),
+   KEY `Automobil_Brend_FK` (`Brend_id_brenda`)         
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Ogla
+CREATE TABLE IF NOT EXISTS `ogla` (
+  `id_ogla` int(11) NOT NULL AUTO_INCREMENT,
+  `Korisnik_id_korisnika` int(11) NOT NULL,
+  `Automobil_id_automobila` int(11) NOT NULL,
+  `naslov` varchar(100) DEFAULT NULL,
+  `tekst` varchar(1000) DEFAULT NULL,
+  `min_ponuda` double DEFAULT 0.0,
+  `aktivan` int(1) DEFAULT NULL,
+  `datum_vreme` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_ogla`),
+  UNIQUE KEY `Ogla__IDX` (`Automobil_id_automobila`),
+  KEY `Ogla_Korisnik_FK` (`Korisnik_id_korisnika`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- Ponuda
+CREATE TABLE IF NOT EXISTS `ponuda` (
+  `id_ponude` int(11) NOT NULL AUTO_INCREMENT,
+  `Ogla_id_ogla` int(11) NOT NULL,
+  `Korisnik_id_korisnika` int(11) NOT NULL,
+  `ponuda_pare` double DEFAULT 0.0,
+  `datum_vreme` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_ponude`),
+  KEY `Ponuda_Ogla_FK` (`Ogla_id_ogla`),
+  KEY `Ponuda_Korisnik_FK` (`Korisnik_id_korisnika`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- Komentar
+CREATE TABLE IF NOT EXISTS `komentar` (
+  `id_komentara` int(11) NOT NULL AUTO_INCREMENT,
+   `Korisnik_id_korisnika` int(11) NOT NULL,
+  `Ogla_id_ogla` int(11) NOT NULL,
+  `sadrzaj` varchar(1000) DEFAULT NULL,
+  `datum_vreme` datetime DEFAULT NULL,
+  `komentar_roditelj_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_komentara`),
+  KEY `Komentar_Ogla_FK` (`Ogla_id_ogla`),
+  KEY `Komentar_Korisnik_FK` (`Korisnik_id_korisnika`)               
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*-------------------------------------------------------------- */;
+/*---------------------RECREATE TABLES END---------------------- */;
+/*-------------------------------------------------------------- */;
+
+
+/*-------------------------------------------------------------- */;
+/*---------------------ADD CONSTRAINTS-------------------------- */;
+/*-------------------------------------------------------------- */;
+
+--
+-- Constraints for table `korisnik`
+--
+ALTER TABLE `korisnik`
+  ADD CONSTRAINT `Korisnik_Uloga_FK` FOREIGN KEY (`Uloga_id_uloge`) REFERENCES `uloga` (`id_uloge`);
+
+--
+-- Constraints for table `automobil`
+--
+ALTER TABLE `automobil`
+  ADD CONSTRAINT `Automobil_Brend_FK` FOREIGN KEY (`Brend_id_brenda`) REFERENCES `brend` (`id_brenda`);
+
+--
+-- Constraints for table `ogla`
+--
+ALTER TABLE `ogla`
+  ADD CONSTRAINT `Ogla_Korisnik_FK` FOREIGN KEY (`Korisnik_id_korisnika`) REFERENCES `korisnik` (`id_korisnika`),
+  ADD CONSTRAINT `Ogla_Automobil_FK` FOREIGN KEY (`Automobil_id_automobila`) REFERENCES `automobil` (`id_automobila`);
+
+--
+-- Constraints for table `ponuda`
+--
+
+ALTER TABLE `ponuda`
+  ADD CONSTRAINT `Ponuda_Ogla_FK` FOREIGN KEY (`Ogla_id_ogla`) REFERENCES `ogla` (`id_ogla`),
+  ADD CONSTRAINT `Ponuda_Korisnik_FK` FOREIGN KEY (`Korisnik_id_korisnika`) REFERENCES `korisnik` (`id_korisnika`);
+
+
+--
+-- Constraints for table `komentar`
+--
+ALTER TABLE `komentar`
+  ADD CONSTRAINT `Komentar_Korisnik_FK` FOREIGN KEY (`Korisnik_id_korisnika`) REFERENCES `korisnik` (`id_korisnika`),
+  ADD CONSTRAINT `Komentar_Ogla_FK` FOREIGN KEY (`Ogla_id_ogla`) REFERENCES `ogla` (`id_ogla`);

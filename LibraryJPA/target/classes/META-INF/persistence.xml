@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="LibraryJPA" transaction-type="RESOURCE_LOCAL">
+		<class>model.Automobil</class>
+		<class>model.Brend</class>
+		<class>model.Komentar</class>
+		<class>model.Korisnik</class>
+		<class>model.Ogla</class>
+		<class>model.Ponuda</class>
+		<class>model.Uloga</class>
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://nastava.is.pmf.uns.ac.rs:3306/is2"/>
+			<property name="javax.persistence.jdbc.user" value="is2"/>
+			<property name="javax.persistence.jdbc.password" value="is2"/>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+		</properties>
+	</persistence-unit>
+</persistence>
